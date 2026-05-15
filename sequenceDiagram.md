@@ -1,5 +1,3 @@
-# Sequence Diagram
-
 sequenceDiagram
     participant browser
     participant server

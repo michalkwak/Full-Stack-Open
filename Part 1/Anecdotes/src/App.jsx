@@ -18,14 +18,17 @@ const App = () => {
 
   return (
     <div>
+      <p>Anecdote of the day:</p>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes  </p>
       <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Next anecdote</button>
       <button onClick={() => {
         const newVotes = [...votes]
         newVotes[selected]++
         setVotes(newVotes)
       }}>Vote</button>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes  </p>
+      <p>Anecdote with most votes:</p>
+      <p>{anecdotes[votes.indexOf(Math.max(...votes))]}</p>
     </div>
   ) 
 }

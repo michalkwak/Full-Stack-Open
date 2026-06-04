@@ -6,27 +6,28 @@ const Header = (props) => {
 const Part = (props) => {
   console.log(props)
   return (
-    <p>
+    <li>
       {props.name} {props.exercises}
-    </p>
+    </li>
   )
 }
 
 const Content = (props) => {
   return (
     <div>
-      <li>
+      <ul>
         {props.parts.map(part => <Part key={part.id} name={part.name} exercises={part.exercises}/>)}
-      </li>
+      </ul>
     </div>
   )
 }
 
 
 const Total = (props) => {
+  const total = props.parts.reduce((sum, part) => sum + part.exercises, 0)
   return (
     <div>
-      Total of {props.parts.reduce((sum, part) => sum + part.exercises, 0)} exercises
+      Total of {total} exercises
     </div>
   )
 }

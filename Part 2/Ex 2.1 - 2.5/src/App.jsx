@@ -1,71 +1,60 @@
-const Header = (props) => {
-  console.log(props)
-  return <h1>{props.name}</h1>
-}
+import Course from './components/Course'
 
-const Part = (props) => {
-  console.log(props)
-  return (
-    <li>
-      {props.name} {props.exercises}
-    </li>
-  )
-}
-
-const Content = (props) => {
+const CourseCatalog = (props) => {
   return (
     <div>
-      <ul>
-        {props.parts.map(part => <Part key={part.id} name={part.name} exercises={part.exercises}/>)}
-      </ul>
-    </div>
-  )
-}
-
-
-const Total = (props) => {
-  const total = props.parts.reduce((sum, part) => sum + part.exercises, 0)
-  return (
-    <div>
-      Total of {total} exercises
-    </div>
-  )
-}
-
-const Course = (props) => {
-  return (
-    <div>
-      <Header name={props.course.name}/>
-      <Content parts={props.course.parts}/>
-      <Total parts={props.course.parts}/>
+      {props.courses.map(course => <Course key={course.id} course={course}/>)}
     </div>
   )
 }
 
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
-  return <Course course={course} />
+  return <CourseCatalog courses={courses} />
 }
 
 export default App

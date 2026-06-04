@@ -15,9 +15,9 @@ const Part = (props) => {
 const Content = (props) => {
   return (
     <div>
-      <p>
+      <li>
         {props.parts.map(part => <Part key={part.id} name={part.name} exercises={part.exercises}/>)}
-      </p>
+      </li>
     </div>
   )
 }
@@ -25,9 +25,9 @@ const Content = (props) => {
 
 const Total = (props) => {
   return (
-    <p>
+    <div>
       Total of {props.parts.reduce((sum, part) => sum + part.exercises, 0)} exercises
-    </p>
+    </div>
   )
 }
 

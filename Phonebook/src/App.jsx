@@ -21,7 +21,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <div>
-          name: <input value={newName} onChange={(e) => setNewName(e.target.value)} />
+          name: <input value={newName} onChange={(event) => setNewName(event.target.value)} />
         </div>
         <div>
           <button type="submit">add</button>

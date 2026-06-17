@@ -28,15 +28,20 @@ const PhonebookForm = (props) => {
 
 const Person = (props) => {
   return (
-    <li>{props.name} {props.number}</li>
+    <li>{props.name} {props.number} <button onClick={() => props.deletePerson(props.id)}>delete</button></li>
   )
 }
 
 const Persons = (props) => {
   return (
     <ul>
-      {props.persons.map((person, index) =>
-        <Person key={index} name={person.name} number={person.number} />
+      {props.persons.map((person) =>
+        <Person 
+          key={person.id}
+          id={person.id} 
+          name={person.name} 
+          number={person.number} 
+          deletePerson={props.deletePerson} />
       )}
     </ul>
   )
@@ -60,7 +65,16 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     if (persons.some(person => person.name === newName)) {
-      alert(newName + ` is already added to phonebook`)
+      if (window.confirm(newName + ` is already added to phonebook, replace the old number with a new one?`)) {
+        const person = persons.find(p => p.name === newName)
+        personService
+          .update(person.id, { ...person, number: newNumber })
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
       return
     }
 
@@ -81,6 +95,17 @@ const App = () => {
       })
   }
 
+  const deletePerson = (id) => {
+    const person = persons.find(p => p.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .deletePerson(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+    }
+  }
+  
   console.log('render', persons.length, 'persons')
 
   return (
@@ -90,7 +115,7 @@ const App = () => {
       <h2>Add a new</h2>
         <PhonebookForm addPerson={addPerson} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
       <h2>Numbers</h2>
-        <Persons persons={persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))} />
+        <Persons persons={persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))} deletePerson={deletePerson} />
     </div>
   )
 }

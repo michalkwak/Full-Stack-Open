@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const Filter = (props) => {
   return (
@@ -52,6 +53,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState(null)
+
 
   useEffect(() => {
     personService
@@ -73,6 +76,10 @@ const App = () => {
             setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
             setNewName('')
             setNewNumber('')
+            setNotification({ message: `Updated ${newName}'s number`, type: 'success' })
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)
           })
       }
       return
@@ -92,6 +99,10 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setNotification({ message: `Added ${newName}`, type: 'success' })
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
       })
   }
 
@@ -102,6 +113,16 @@ const App = () => {
         .deletePerson(id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== id))
+          setNotification({ message: `Deleted ${person.name}`, type: 'success' })
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
+        }).catch(() => {
+          setPersons(persons.filter(p => p.id !== id))
+          setNotification({ message: `Information of ${person.name} has already been removed from server`, type: 'error' })
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
         })
     }
   }
@@ -111,11 +132,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
         <Filter filter={filter} setFilter={setFilter} />
       <h2>Add a new</h2>
         <PhonebookForm addPerson={addPerson} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
       <h2>Numbers</h2>
-        <Persons persons={persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))} deletePerson={deletePerson} />
+        <Persons persons={persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))} deletePerson={deletePerson} />      
     </div>
   )
 }

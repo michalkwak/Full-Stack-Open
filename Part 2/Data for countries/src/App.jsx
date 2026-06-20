@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import countryService from './services/countries'
+import weatherService from './services/weather'
 
 const Filter = (props) => {
   return (
@@ -22,6 +23,7 @@ const Country = (props) => {
         )}
       </ul>
       <img src={props.flag} alt="flag" width="100" />
+      <Weather capital={props.capital} />
     </div>
   )
 }
@@ -54,6 +56,31 @@ const CountryList = (props) => {
           {country.name.common} <button onClick={() => props.setFilter(country.name.common)}>show</button>
         </p>
       )}
+    </div>
+  )
+}
+
+const Weather = (props) => {
+  const [weather, setWeather] = useState(null)
+
+  useEffect(() => {
+    weatherService
+      .getWeather(props.capital)
+      .then(weatherData => {
+        setWeather(weatherData)
+      })
+  }, [props.capital])
+
+  if (weather === null) {
+    return null
+  }
+
+  return (
+    <div>
+      <h3>Weather in {props.capital}</h3>
+      <p>temperature {weather.main.temp} celsius</p>
+      <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="weather icon" />
+      <p>wind {weather.wind.speed} m/s</p>
     </div>
   )
 }

@@ -17,3 +17,6 @@ Content-Type: application/json
     "name": "Michal Kwak",
     "number": "123"
 }
+
+###
+GET https://phonebook-exercise-0igw.onrender.com/api/persons/1

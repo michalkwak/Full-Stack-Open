@@ -2,6 +2,13 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose')
+require('dotenv').config()
+
+const password = process.argv[2]
+const url = process.env.MONGODB_URI
+
+const Person = require('./models/person')
 
 app.use(express.static('dist'))
 app.use(cors())
@@ -46,7 +53,9 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -99,7 +108,7 @@ app.post('/api/persons', (request, response) => {
   response.json(newPerson)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

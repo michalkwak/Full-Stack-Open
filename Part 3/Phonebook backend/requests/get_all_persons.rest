@@ -14,9 +14,9 @@ POST http://localhost:3001/api/persons HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "Michal Kwak",
+    "name": "Michal",
     "number": "123"
 }
 
 ###
-GET https://phonebook-exercise-0igw.onrender.com/api/persons/1
+GET https://phonebook-exercise-0igw.onrender.com/api/persons/6a46381d1c60e2d36b1dae37

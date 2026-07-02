@@ -104,7 +104,8 @@ const App = () => {
           setNotification(null)
         }, 5000)
       }).catch(error => {
-        setNotification({ message: "Name needs to be at least 3 characters long", type: 'error' })
+        console.log(error.response.data.error)
+        setNotification({ message: error.response.data.error, type: 'error' })
         setTimeout(() => {
           setNotification(null)
         }, 5000)

@@ -93,7 +93,7 @@ app.post('/api/persons', (request, response, next) => {
       number: body.number,
     })
 
-    return person.save().then(savedPerson => {
+    person.save().then(savedPerson => {
       response.json(savedPerson)
     })
   }).catch(error => next(error))

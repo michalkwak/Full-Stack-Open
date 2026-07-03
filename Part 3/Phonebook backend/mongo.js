@@ -8,7 +8,7 @@ const password = process.argv[2]
 const name = process.argv[3]
 const number = process.argv[4]
 
-const url = `mongodb://fullstack:<db_password>@ac-ly5firt-shard-00-00.eysx1gg.mongodb.net:27017,ac-ly5firt-shard-00-01.eysx1gg.mongodb.net:27017,ac-ly5firt-shard-00-02.eysx1gg.mongodb.net:27017/phonebookApp?ssl=true&replicaSet=atlas-hrg58h-shard-0&authSource=admin&appName=Cluster0&retryWrites=true&w=majority`
+const url = 'mongodb://fullstack:<db_password>@ac-ly5firt-shard-00-00.eysx1gg.mongodb.net:27017,ac-ly5firt-shard-00-01.eysx1gg.mongodb.net:27017,ac-ly5firt-shard-00-02.eysx1gg.mongodb.net:27017/phonebookApp?ssl=true&replicaSet=atlas-hrg58h-shard-0&authSource=admin&appName=Cluster0&retryWrites=true&w=majority'
   .replace('<db_password>', password)
 
 mongoose.set('strictQuery', false)

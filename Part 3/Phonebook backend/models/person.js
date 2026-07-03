@@ -8,7 +8,7 @@ const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
 mongoose.connect(url, { family: 4 })
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch(error => {
@@ -28,8 +28,11 @@ const personSchema = new mongoose.Schema({
       validator: function(v) {
         return /\d{2,3}-\d+/.test(v)
       },
-  },}
+    },
+    required: true,
+  },
 })
+
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {

@@ -151,6 +151,13 @@ test('a blog can be deleted', async () => {
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
 })
 
+test('deleting with a malformatted id returns 400', async () => {
+  await api
+    .delete('/api/blogs/invalid-id')
+    .expect(400)
+})
+
+
 after(async () => {
   await mongoose.connection.close()
 })

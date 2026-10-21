@@ -74,6 +74,22 @@ test('blog without content is not added', async () => {
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
 })
 
+test('blog with likes missing defaults to 0 likes', async () => {
+  const newBlog = {
+    title: 'Blog with no likes',
+    author: "Stinky",
+    url: 'www.example-site.com',
+  }
+
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  assert.strictEqual(response.body.likes, 0)
+})
+
 test('a specific blog can be viewed', async () => {
   const blogsAtStart = await helper.blogsInDb()
   const blogToView = blogsAtStart[0]
